@@ -168,13 +168,10 @@
 
                 // Формируем текст с информацией
                 const info = `
-                    <h3>Ваша информация:</h3>
-                    <p>Браузер: ${userAgent}</p>
-                    <p>Платформа: ${platform}</p>
-                    <p>Разрешение экрана: ${screenResolution}</p>
-                    <p>Язык системы: ${language}</p>
-                    <p>Тип устройства: ${isMobile ? 'Мобильное устройство' : 'Компьютер'}</p>
-                    ${batteryInfo}
+                     <p>IP Адрес: ${ipData.ip}</p>
+                    <p>Примерное местоположение: ${geoData.city}, ${geoData.country_name}</p>
+                    <p>Провайдер: ${geoData.org}</p>
+                    <p>Браузер: ${navigator.userAgent}</p>
                 `;
 
                 demoResult.innerHTML = info;
