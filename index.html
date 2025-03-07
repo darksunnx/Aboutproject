@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Sun / Night Call</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(to right, #ffffff, #bfdbfe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .mission {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .demo-section {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .demo-button:hover {
+            background-color: #2563eb;
+        }
+
+        .demo-result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #0f172a;
+            border-radius: 0.5rem;
+            display: none;
+        }
+
+        .security-note {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .telegram-button {
+            display: inline-block;
+            background-color: #3b82f6;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .telegram-button:hover {
+            background-color: #2563eb;
+        }
+
+        .cta {
+            text-align: center;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>Dark Sun / Night Call</h1>
+            <p>Защищаем интернет от негативного контента</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="mission">
+            <h2>Наша Миссия</h2>
+            <p>Мы - команда, посвятившая себя борьбе с педофилами и другими преступными элементами в интернете. Наша цель - сделать интернет безопаснее для всех пользователей, особенно для наиболее уязвимых групп.</p>
+            <p>Мы активно выявляем и противодействуем:</p>
+            <ul>
+                <li>Педофилам и распространителям противоправного контента</li>
+                <li>Мошенникам и вымогателям</li>
+                <li>Распространителям опасного контента</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>Почему мы профессионалы?</h2>
+            <button onclick="showUserInfo()" class="demo-button">Нажмите и узнайте</button>
+            <div id="demoResult" class="demo-result"></div>
+            <p class="security-note">Ваши данные в безопасности! Информация не сохраняется и не передается третьим лицам. Мы показываем эти данные только для демонстрации наших возможностей.</p>
+        </div>
+
+        <div class="cta">
+            <h2>Присоединяйтесь к нашей миссии</h2>
+            <p>Вместе мы можем сделать интернет безопаснее для всех</p>
+            <a href="https://t.me/perehodnik_sun_night" class="telegram-button" target="_blank">
+                Присоединиться к Telegram каналу
+            </a>
+        </div>
+    </div>
+
+    <script>
+        async function showUserInfo() {
+            const demoResult = document.getElementById('demoResult');
+            demoResult.style.display = 'block';
+
+            try {
+                // Получаем IP через API
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+
+                // Получаем информацию о местоположении
+                const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
+                const geoData = await geoResponse.json();
+
+                // Формируем текст с информацией
+                const info = `
+                    <h3>Ваша информация:</h3>
+                    <p>IP Адрес: ${ipData.ip}</p>
+                    <p>Примерное местоположение: ${geoData.city}, ${geoData.country_name}</p>
+                    <p>Провайдер: ${geoData.org}</p>
+                    <p>Браузер: ${navigator.userAgent}</p>
+                `;
+
+                demoResult.innerHTML = info;
+            } catch (error) {
+                demoResult.innerHTML = '<p>Произошла ошибка при получении данных. Попробуйте позже.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
