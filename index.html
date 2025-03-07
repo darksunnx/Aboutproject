@@ -153,6 +153,14 @@
                 const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
                 const geoData = await geoResponse.json();
 
+                // Получаем информацию о батарее, если доступно
+                let batteryInfo = '';
+                if ('getBattery' in navigator) {
+                    const battery = await navigator.getBattery();
+                    const batteryLevel = Math.round(battery.level * 100);
+                    batteryInfo = `<p>Уровень заряда батареи: ${batteryLevel}%</p>`;
+                }
+
                 // Формируем текст с информацией
                 const info = `
                     <h3>Ваша информация:</h3>
@@ -160,6 +168,7 @@
                     <p>Примерное местоположение: ${geoData.city}, ${geoData.country_name}</p>
                     <p>Провайдер: ${geoData.org}</p>
                     <p>Браузер: ${navigator.userAgent}</p>
+                    ${batteryInfo}
                 `;
 
                 demoResult.innerHTML = info;
