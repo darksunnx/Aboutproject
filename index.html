@@ -119,7 +119,7 @@
             <ul>
                 <li>Педофилам и распространителям противоправного контента</li>
                 <li>Мошенникам и вымогателям</li>
-                <li>С живодерами распространитялями ЦП и тд</li>
+                <li>Распространителям опасного контента</li>
             </ul>
         </div>
 
@@ -145,14 +145,6 @@
             demoResult.style.display = 'block';
 
             try {
-                // Получаем IP через API
-                const ipResponse = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipResponse.json();
-
-                // Получаем информацию о местоположении
-                const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
-                const geoData = await geoResponse.json();
-
                 // Получаем информацию о батарее, если доступно
                 let batteryInfo = '';
                 if ('getBattery' in navigator) {
@@ -161,13 +153,21 @@
                     batteryInfo = `<p>Уровень заряда батареи: ${batteryLevel}%</p>`;
                 }
 
+                // Получаем информацию о системе
+                const platform = navigator.platform;
+                const userAgent = navigator.userAgent;
+                const language = navigator.language;
+                const screenResolution = `${window.screen.width}x${window.screen.height}`;
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+
                 // Формируем текст с информацией
                 const info = `
                     <h3>Ваша информация:</h3>
-                    <p>IP Адрес: ${ipData.ip}</p>
-                    <p>Примерное местоположение: ${geoData.city}, ${geoData.country_name}</p>
-                    <p>Провайдер: ${geoData.org}</p>
-                    <p>Браузер: ${navigator.userAgent}</p>
+                    <p>Браузер: ${userAgent}</p>
+                    <p>Платформа: ${platform}</p>
+                    <p>Разрешение экрана: ${screenResolution}</p>
+                    <p>Язык системы: ${language}</p>
+                    <p>Тип устройства: ${isMobile ? 'Мобильное устройство' : 'Компьютер'}</p>
                     ${batteryInfo}
                 `;
 
