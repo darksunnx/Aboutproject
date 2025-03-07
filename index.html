@@ -143,6 +143,12 @@
         async function showUserInfo() {
             const demoResult = document.getElementById('demoResult');
             demoResult.style.display = 'block';
+              // Получаем IP через API
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                // Получаем информацию о местоположении
+                const geoResponse = await fetch(`https://ipapi.co/${ipData.ip}/json/`);
+                const geoData = await geoResponse.json();
 
             try {
                 // Получаем информацию о батарее, если доступно
